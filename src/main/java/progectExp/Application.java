@@ -3,20 +3,19 @@ package progectExp;
 import java.util.Date;
 
 public class Application {
-    protected double id;
-    protected String data;
-    protected String lvl1,lvl2,lvl3,lvl4;
-    protected String type;
-    protected String text;
-    protected String status;
-    protected String initiator;
-    protected int numberObject;
-    protected String address;
-    protected String engineer;
-    protected String contractor;
-    protected String ChangeDate;
-    protected String dataSLA;
-
+    public double id;
+    public Date data;
+    public String lvl1, lvl2, lvl3, lvl4;
+    public String type;
+    public String text;
+    public String status;
+    public String initiator;
+    public int numberObject;
+    public String address;
+    public String engineer;
+    public String contractor;
+    public Date ChangeDate;
+    public Date dataSLA;
 
 
     public Application() {

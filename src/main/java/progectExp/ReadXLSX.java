@@ -15,12 +15,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-public class ReadXLSX {
+public class ReadXLSX extends Application{
     private File file;
-    private ArrayList<Application> baseApplication;
+    public ArrayList<Application> baseApplication;
 
 
-    public ReadXLSX(File file) throws IOException, InvalidFormatException, ParseException {
+    public ReadXLSX(File file) throws IOException, InvalidFormatException {
         this.file = file;
 
         // Read XSL file
@@ -31,7 +31,7 @@ public class ReadXLSX {
         Iterator<Row> rowIterator = sheet.iterator();         //  Iterator<Cell> cellIterator = rowIterator.cellIterator();
 
         baseApplication = new ArrayList<Application>();
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
 
         while (rowIterator.hasNext()) {
             Row row = rowIterator.next();            // Get iterator to all cells of current row
@@ -73,7 +73,16 @@ public class ReadXLSX {
             }
             Application application = new Application();
             application.id = Double.parseDouble(arr[0]);
-            application.data = arr[1];
+            try {
+                application.data = simpleDateFormat.parse(arr[1]);
+            } catch (ParseException e) {
+
+                try {
+                    application.data = simpleDateFormat.parse(arr[1] + " 21:00:00");
+                } catch (ParseException parseException) {
+                    System.out.println("ошибка в дате заявки " + arr[0]);
+                }
+            }
             application.lvl1 = arr[2];
             application.lvl2 = arr[3];
             application.lvl3 = arr[4];
@@ -86,8 +95,24 @@ public class ReadXLSX {
             application.address = arr[11];
             application.engineer = arr[12];
             application.contractor = arr[13];
-            application.ChangeDate = arr[14];
-            application.dataSLA = arr[15];
+            try {
+                application.ChangeDate = simpleDateFormat.parse(arr[14]);
+            } catch (ParseException e) {
+                try {
+                    application.data = simpleDateFormat.parse(arr[14] + " 21:00:00");
+                } catch (ParseException parseException) {
+                    System.out.println("ошибка в дате 2 заявки " + arr[0]);
+                }
+            }
+            try {
+                application.dataSLA = simpleDateFormat.parse(arr[15]);
+            } catch (ParseException e) {
+                try {
+                    application.data = simpleDateFormat.parse(arr[15] + " 21:00:00");
+                } catch (ParseException parseException) {
+                    System.out.println("ошибка в дате 3 заявки " + arr[0]);
+                }
+            }
             baseApplication.add(application);
 
         }
